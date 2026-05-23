@@ -1,26 +1,12 @@
-const fs = require("fs");
-const path = require("path");
+import { createClient } from "@supabase/supabase-js";
 
-const root = path.resolve(__dirname, "..");
-const out = path.join(root, "public");
-const files = ["index.html", "styles.css", "app.js", "brand-config.js", "brand-config.json"];
-const folders = ["assets", "vendor"];
+export function createBrowserSupabase() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-function cleanDirectory(target) {
-  fs.rmSync(target, { recursive: true, force: true });
-  fs.mkdirSync(target, { recursive: true });
+  if (!url || !anonKey) {
+    return null;
+  }
+
+  return createClient(url, anonKey);
 }
-
-function copyFile(file) {
-  fs.copyFileSync(path.join(root, file), path.join(out, file));
-}
-
-function copyFolder(folder) {
-  fs.cpSync(path.join(root, folder), path.join(out, folder), { recursive: true });
-}
-
-cleanDirectory(out);
-files.forEach(copyFile);
-folders.forEach(copyFolder);
-
-console.log(`Built ${out}`);

@@ -1,40 +1,29 @@
-# MP Technology QR
-
-Customer-login QR SaaS for branded codes, saved libraries, dynamic redirect links, and scan tracking.
-
-## Local Setup
-
-```powershell
-Copy-Item .env.example .env.local
-npm run dev
-```
-
-Fill `.env.local` with Supabase keys before using auth or the dashboard.
-
-## Supabase
-
-1. Create a Supabase project.
-2. Open the SQL editor.
-3. Run `supabase/schema.sql`.
-4. In Vercel, add these environment variables:
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - `SUPABASE_SERVICE_ROLE_KEY`
-
-## Vercel
-
-This is now a Next.js app. Vercel can detect it automatically.
-
-Build command:
-
-```text
-npm run build
-```
-
-## Desktop Build
-
-```powershell
-npm run build:win
-```
-
-The packaged Windows app is generated in `dist/`. The desktop build is still available for one-off customer packaging.
+{
+  "name": "mp-technology-qr",
+  "version": "0.1.0",
+  "description": "MP Technology Consulting branded QR code generator.",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "build:web": "next build",
+    "start": "next start",
+    "desktop": "electron .",
+    "build:static": "node scripts/build-web.js",
+    "build:win": "powershell -ExecutionPolicy Bypass -File scripts/build-win.ps1"
+  },
+  "devDependencies": {
+    "browserify": "^17.0.1",
+    "electron": "^31.7.7",
+    "electron-packager": "^17.1.2",
+    "terser": "^5.48.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.106.1",
+    "next": "^16.2.6",
+    "qrcode": "^1.5.4",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  }
+}
